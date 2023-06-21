@@ -2,30 +2,23 @@
 #SBATCH -J diann
 #SBATCH --ntasks=1
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=10 # 40 CPUs per node; each CPU allows one thread. So set DiaNN's "--threads" equal to this number
-#SBATCH --mem=110GB        # 512GB per node
+####SBATCH --cpus-per-task=10 # 40 CPUs per node; each CPU allows one thread. So set DiaNN's "--threads" equal to this number
+####SBATCH --mem=110GB        # 512GB per node
 #SBATCH --mail-type=all
 #SBATCH --mail-user=wzeng@biochem.mpg.de  # change to your email address
 #SBATCH --time=14-00:00:00    # slurm server only allows maximal running time of 14 days
 #SBATCH --chdir=./logs
 
 
-
 echo "diann search type is ${SEARCH_TYPE}"
 RAW_FILES=(${RAW_FILES})
 FASTAS=(${FASTAS})
-
-################### you need to modify values below ##################
-is_mDIA=no # yes or no
-is_timsTOF=no # yes or no
-gen_lib=no # yes or no
-######################################################################
 
 
 ################ DO NOT CHANGE CMDs below if possible ################
 if [[ "${SEARCH_TYPE}" == "merge-lib" ]]; then
     OUTFILE=${OUT_DIR}/xx_gen_lib_rpt.tsv
-    FILE="xxx.d" # any non-existing file, diann will skip the search
+    FILE=${OUT_DIR}/xxx.d # any non-existing file, diann will skip the search
     OUTLIB=${OUT_DIR}/xx_gen_lib.tsv
 elif [[ "${SEARCH_TYPE}" == "first-search" ]]; then
     FILE=${RAW_FILES[$SLURM_ARRAY_TASK_ID]}
@@ -42,12 +35,18 @@ echo ""
 DIANN="/fs/pool/pool-mann-pub/User/Feng/diann_linux/1.8.1/diann"
 
 #################### common params ########################
-diann_params='--threads 10 --verbose 1 --qvalue 0.01 --matrices --relaxed-prot-inf --peak-center --no-ifs-removal --rt-profiling --peak-center --no-ifs-removal --smart-profiling --out "'${OUTFILE}'" --temp "'${OUT_DIR}'"'
+diann_params='--threads '${cpus}' --verbose 1 --qvalue 0.01 --matrices --relaxed-prot-inf --peak-center --no-ifs-removal --rt-profiling --peak-center --no-ifs-removal --smart-profiling --out "'${OUTFILE}'" --temp "'${OUT_DIR}'" --out-lib "'${OUTLIB}'"'
 if [[ "${gen_lib}" == "yes" ]]; then
-    diann_params=${diann_params}' --out-lib "'${OUTLIB}'" --gen-spec-lib'
+    diann_params=${diann_params}' --gen-spec-lib'
 fi
-if [[ "${is_timsTOF}" == "yes" ]]; then
-    diann_params=${diann_params}' --mass-acc 15 --mass-acc-ms1 15'
+if [[ ! -z "${MASS_ACC}" ]]; then
+    diann_params=${diann_params}' --mass-acc '${MASS_ACC}
+fi
+if [[ ! -z "${MASS_ACC_MS1}" ]]; then
+    diann_params=${diann_params}' --mass-acc-ms1 '${MASS_ACC_MS1}
+fi
+if [[ ! -z "${SCAN_WINDOW}" ]]; then
+    diann_params=${diann_params}' --window '${SCAN_WINDOW}
 fi
 ###########################################################
 
