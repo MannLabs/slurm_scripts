@@ -72,10 +72,10 @@ for fasta in "${FASTAS[@]}"; do
     if [[ -d ${fasta} ]]; then
         fasta_params=${fasta_params}' --fasta "'${fasta}'"'
     fi
-    if [[ ! -z "${fasta_params}" ]]; then
-        diann_params=${diann_params}' -reannotate'${fasta_params}
-    fi
 done
+if [[ ! -z "${fasta_params}" ]]; then
+    diann_params=${diann_params}' -reannotate'${fasta_params}
+fi
 ###########################################################
 
 ################## RAW files ##############################
