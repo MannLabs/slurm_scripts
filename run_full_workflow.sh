@@ -1,31 +1,37 @@
 #!/bin/bash -l
 # SEARCH_TYPE can be "merge-lib", "first-search", "second-search"
 
-
-#***********************************************************
-#********** file paths MUST NOT contain spaces *************
-#***********************************************************
 _wait="--wait"
 
 
-### login hpcl: ssh -l your_user_name -X hpcl7001
+#***********************************************************
+#************** NO SPACES in the file paths ****************
+#***********************************************************
+############## how to use this script #####################
+### 1. login hpcl: ssh -l your_user_name -X hpcl7001
+### 
+### 2. copy the script folder to your_pool_folder on windows or use: copy -r /fs/pool/pool-mann-pub/User/Feng/diann_linux/slurm_scripts/* your_pool_folder
+### 
+### 3. cd your_pool_folder
+### 
+### 4. sh run_full_workflow.sh to run jobs
 
-### copy the script folder to your workspace pool folder: copy -r /fs/pool/pool-mann-pub/User/diann_linux/slurm_scripts/* your_pool_folder
-### cd your_pool_folder
-
-### run jobs: sh run_full_workflow.sh
-
-### check job ids in the queue: "squeue" or "squeue -u {username}"
-### cancel a job: scancel your_job_id
+### [5] check job ids in the queue: "squeue" or "squeue -u {username}"
+### [6] cancel a job: scancel your_job_id
 
 
 
 ### Change settings below for your project
+# *.d for bruker, .mzml for thermo. Or .dia for any diann converted raw files
+# For thermo raw, you have to convert .raw files into .dia on windows using DIANN or .mzml files using msconvert
 RAW_FILES='/fs/pool/pool-mann-projects/Feng/HLA-DB/public_raw/PXD034772/DIA/raw/20200828_DIA_COL011'*.dia
-## all diann output files will be saved into $OUT_DIR
+### all diann output files will be saved into this $OUT_DIR
 OUT_DIR="/fs/pool/pool-mann-projects/Feng/speclib_for_people/MariaW/HLA_personlibs/9/feng/out_panlib"
+
+### spectral library
 SPECLIB="/fs/pool/pool-mann-projects/Feng/speclib_for_people/MariaW/HLA_personlibs/slurm/MSV000084172+PXD004894-fragger.speclib.tsv.speclib"
-FASTAS="/fs/pool/pool-mann-projects/Feng/fasta/human.fasta"
+### fasta files, can be non-existing file (X.fasta)
+FASTAS="/fs/pool/pool-mann-projects/Feng/fasta/X.fasta"
 
 MASS_ACC=""
 MASS_ACC_MS1=""
@@ -42,7 +48,7 @@ echo 'sbatch array='"${array}"
 
 mkdir -p "${OUT_DIR}"
 mkdir -p ./logs
-### first-search
+
 ### first-search
 echo "first-search"
 gen_lib=no
