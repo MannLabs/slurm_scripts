@@ -20,6 +20,8 @@ _wait="--wait"
 ### [6] cancel a job: scancel your_job_id
 
 
+### Please use your email address
+mail_user='wzeng@biochem.mpg.de'
 
 ### Change settings below for your project
 # *.d for bruker, .mzml for thermo. Or .dia for any diann converted raw files
@@ -52,12 +54,12 @@ mkdir -p ./logs
 ### first-search
 echo "first-search"
 gen_lib=no
-cpus=10
-sbatch --export=ALL,SEARCH_TYPE="first-search",RAW_FILES="${RAW_FILES}",OUT_DIR="${OUT_DIR}",SPECLIB="${SPECLIB}",FASTAS="${FASTAS}",MASS_ACC=${MASS_ACC},MASS_ACC_MS1=${MASS_ACC_MS1},SCAN_WINDOW=${SCAN_WINDOW},is_mDIA=${is_mDIA},gen_lib=${gen_lib},cpus=${cpus} --array="${array}" --cpus-per-task=${cpus} --mem=110GB ${_wait} sbatch_all_search_in_one.sh
+cpus_per_task=10
+sbatch --export=ALL,SEARCH_TYPE="first-search",RAW_FILES="${RAW_FILES}",OUT_DIR="${OUT_DIR}",SPECLIB="${SPECLIB}",FASTAS="${FASTAS}",MASS_ACC=${MASS_ACC},MASS_ACC_MS1=${MASS_ACC_MS1},SCAN_WINDOW=${SCAN_WINDOW},is_mDIA=${is_mDIA},gen_lib=${gen_lib},cpus=${cpus_per_task} --array="${array}" --cpus-per-task=${cpus_per_task} --mem=110GB --mail-user=${mail_user} ${_wait} sbatch_all_search_in_one.sh
 
 ### second-search
 echo "second-search"
 gen_lib=yes
-cpus=40
-sbatch --export=ALL,SEARCH_TYPE="second-search",RAW_FILES="${RAW_FILES}",OUT_DIR="${OUT_DIR}",SPECLIB="${SPECLIB}",FASTAS="${FASTAS}",MASS_ACC=${MASS_ACC},MASS_ACC_MS1=${MASS_ACC_MS1},SCAN_WINDOW=${SCAN_WINDOW},is_mDIA=${is_mDIA},gen_lib=${gen_lib},cpus=${cpus} --cpus-per-task=${cpus} --mem=440GB sbatch_all_search_in_one.sh
+cpus_per_task=40
+sbatch --export=ALL,SEARCH_TYPE="second-search",RAW_FILES="${RAW_FILES}",OUT_DIR="${OUT_DIR}",SPECLIB="${SPECLIB}",FASTAS="${FASTAS}",MASS_ACC=${MASS_ACC},MASS_ACC_MS1=${MASS_ACC_MS1},SCAN_WINDOW=${SCAN_WINDOW},is_mDIA=${is_mDIA},gen_lib=${gen_lib},cpus=${cpus_per_task} --cpus-per-task=${cpus_per_task} --mem=440GB --mail-user=${mail_user} sbatch_all_search_in_one.sh
 

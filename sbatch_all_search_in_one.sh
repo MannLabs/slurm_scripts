@@ -5,7 +5,7 @@
 ####SBATCH --cpus-per-task=10 # 40 CPUs per node; each CPU allows one thread. So set DiaNN's "--threads" equal to this number
 ####SBATCH --mem=110GB        # 512GB per node
 #SBATCH --mail-type=all
-#SBATCH --mail-user=wzeng@biochem.mpg.de  # change to your email address
+####SBATCH --mail-user=wzeng@biochem.mpg.de  # change to your email address
 #SBATCH --time=14-00:00:00    # slurm server only allows maximal running time of 14 days
 #SBATCH --chdir=./logs
 
