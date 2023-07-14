@@ -32,8 +32,11 @@ echo ${FILE}
 echo ${OUTFILE}
 echo ""
 
-DIANN="/fs/pool/pool-mann-pub/User/Feng/diann_linux/1.8.1/diann"
-
+if [[ -z "${DIANN}" ]]; then
+    DIANN="/fs/pool/pool-mann-pub/User/Feng/diann_linux/1.8.1/diann"
+else
+    echo 'DIANN path = '${DIANN}
+fi
 #################### common params ########################
 diann_params='--threads '${cpus}' --verbose 1 --qvalue 0.01 --matrices --relaxed-prot-inf --peak-center --no-ifs-removal --rt-profiling --peak-center --no-ifs-removal --smart-profiling --out "'${OUTFILE}'" --temp "'${OUT_DIR}'" --out-lib "'${OUTLIB}'"'
 if [[ "${gen_lib}" == "yes" ]]; then
