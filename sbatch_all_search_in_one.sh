@@ -93,6 +93,8 @@ fi
 
 echo "${DIANN} ${diann_params}"
 echo "=================================================="
-
+if [[ ! -z "${other_params}" ]]; then
+    diann_params=${diann_params} "${other_params}"
+fi
 srun ${DIANN} ${diann_params}
 

@@ -39,6 +39,10 @@ MASS_ACC=""
 MASS_ACC_MS1=""
 SCAN_WINDOW=""
 is_mDIA=no
+
+############### Additional DiaNN commands ################
+other_params = "" # for example, variable modifications
+
 ##########################################################
 
 #################### DiaNN folder ########################
@@ -62,11 +66,11 @@ mkdir -p ./logs
 echo "first-search"
 gen_lib=no
 cpus_per_task=10
-sbatch --export=ALL,SEARCH_TYPE="first-search",DIANN="${DIANN}",RAW_FILES="${RAW_FILES}",OUT_DIR="${OUT_DIR}",SPECLIB="${SPECLIB}",FASTAS="${FASTAS}",MASS_ACC=${MASS_ACC},MASS_ACC_MS1=${MASS_ACC_MS1},SCAN_WINDOW=${SCAN_WINDOW},is_mDIA=${is_mDIA},gen_lib=${gen_lib},cpus=${cpus_per_task} --array="${array}" --cpus-per-task=${cpus_per_task} --mem=110GB --mail-user=${mail_user} ${_wait} sbatch_all_search_in_one.sh
+sbatch --export=ALL,SEARCH_TYPE="first-search",DIANN="${DIANN}",RAW_FILES="${RAW_FILES}",OUT_DIR="${OUT_DIR}",SPECLIB="${SPECLIB}",FASTAS="${FASTAS}",MASS_ACC=${MASS_ACC},MASS_ACC_MS1=${MASS_ACC_MS1},SCAN_WINDOW=${SCAN_WINDOW},is_mDIA=${is_mDIA},other_params="${other_params}",gen_lib=${gen_lib},cpus=${cpus_per_task} --array="${array}" --cpus-per-task=${cpus_per_task} --mem=110GB --mail-user=${mail_user} ${_wait} sbatch_all_search_in_one.sh
 
 ### second-search
 echo "second-search"
 gen_lib=yes
 cpus_per_task=40
-sbatch --export=ALL,SEARCH_TYPE="second-search",DIANN="${DIANN}",RAW_FILES="${RAW_FILES}",OUT_DIR="${OUT_DIR}",SPECLIB="${SPECLIB}",FASTAS="${FASTAS}",MASS_ACC=${MASS_ACC},MASS_ACC_MS1=${MASS_ACC_MS1},SCAN_WINDOW=${SCAN_WINDOW},is_mDIA=${is_mDIA},gen_lib=${gen_lib},cpus=${cpus_per_task} --cpus-per-task=${cpus_per_task} --mem=440GB --mail-user=${mail_user} sbatch_all_search_in_one.sh
+sbatch --export=ALL,SEARCH_TYPE="second-search",DIANN="${DIANN}",RAW_FILES="${RAW_FILES}",OUT_DIR="${OUT_DIR}",SPECLIB="${SPECLIB}",FASTAS="${FASTAS}",MASS_ACC=${MASS_ACC},MASS_ACC_MS1=${MASS_ACC_MS1},SCAN_WINDOW=${SCAN_WINDOW},is_mDIA=${is_mDIA},other_params="${other_params}",gen_lib=${gen_lib},cpus=${cpus_per_task} --cpus-per-task=${cpus_per_task} --mem=440GB --mail-user=${mail_user} sbatch_all_search_in_one.sh
 
