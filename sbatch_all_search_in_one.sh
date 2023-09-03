@@ -77,7 +77,7 @@ for fasta in "${FASTAS[@]}"; do
     fi
 done
 if [[ ! -z "${fasta_params}" ]]; then
-    diann_params=${diann_params}' -reannotate'${fasta_params}
+    diann_params=${diann_params}' --reannotate'${fasta_params}
 fi
 ###########################################################
 
