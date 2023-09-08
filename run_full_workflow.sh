@@ -41,7 +41,7 @@ SCAN_WINDOW=""
 is_mDIA=no
 
 ############### Additional DiaNN commands ################
-other_params = "" # for example, variable modifications
+other_params="" # for example, variable modifications
 
 ##########################################################
 
