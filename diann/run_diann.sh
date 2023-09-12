@@ -51,7 +51,7 @@ DIANN="/fs/pool/pool-mann-pub/User/Feng/diann_linux/1.8.1/diann"
 ###### for tsv lib, convert it into .speclib format ######
 if [[ ${SPECLIB} == *.tsv ]] ; then
 	${DIANN} --lib "${SPECLIB}" --out "${SPECLIB}".report.tsv --f x.raw
-	SPECLIB = "${SPECLIB}".speclib
+	SPECLIB="${SPECLIB}".speclib
 	rm x.raw.quant
 fi
 raw_files=(${RAW_FILES})
